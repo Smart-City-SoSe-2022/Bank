@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Npgsql;
 using System.Data;
 
@@ -20,42 +21,39 @@ namespace bankbackend.Controllers
       
         // GET: api/Values
             [HttpGet]
-        public JsonResult Get()
+        public string Get()
         {
-
-        
-
-        string query = @"
-                select Id as ""Id"",
+            string query = @"
+                select id as ""id"",
                 name as ""name"",
                 surename as ""surename"",
                 email as ""email"",
                 telefon as ""telefon"",
                 username as ""username""
-                From Costumer";
+                From customer";
 
 
-            DataTable table = new DataTable();
 
+        DataTable table = new DataTable();
+        string ausgabe = string.Empty; ;
             string sqlDatasource = _configuration.GetConnectionString("bankappcon");
             NpgsqlDataReader myReader;
-
-            
-
             using (var mycon = new NpgsqlConnection(sqlDatasource))
             {
                 mycon.Open();
                 using (NpgsqlCommand mycommand = new NpgsqlCommand(query, mycon))
                 {
                     myReader = mycommand.ExecuteReader();
+
                     table.Load(myReader);
+                    
+                    ausgabe = JsonConvert.SerializeObject(table);
+                    
                     myReader.Close();
                     mycon.Close();
                 }
             }
-
-            
-            return new JsonResult(table);
+            return ausgabe;
         }
     }
 }

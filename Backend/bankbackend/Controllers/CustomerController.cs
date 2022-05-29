@@ -21,11 +21,13 @@ namespace bankbackend.Controllers
 
         [Route("Get/{id}")]
         [HttpGet]
-        // GET: api/Customer/Get/5
+        // GET: api/Customer/Get/{id}
         public String Get(int id)
         {
             return "Hello"+id;
         }
+
+
 
     }
 }
