@@ -31,3 +31,5 @@ C:\Users\Marcel\Desktop\Uni\Softwareproektmanagment\Bank\Backend\BankBackend\bin
 C:\Users\Marcel\Desktop\Uni\Softwareproektmanagment\Bank\Backend\BankBackend\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Relational.dll
 C:\Users\Marcel\Desktop\Uni\Softwareproektmanagment\Bank\Backend\BankBackend\bin\Debug\net6.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
 C:\Users\Marcel\Desktop\Uni\Softwareproektmanagment\Bank\Backend\BankBackend\bin\Debug\net6.0\Newtonsoft.Json.dll
+C:\Users\Marcel\Desktop\Uni\Softwareproektmanagment\Bank\Backend\BankBackend\bin\Debug\net6.0\EasyNetQ.dll
+C:\Users\Marcel\Desktop\Uni\Softwareproektmanagment\Bank\Backend\BankBackend\bin\Debug\net6.0\RabbitMQ.Client.dll

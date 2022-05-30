@@ -1,6 +1,8 @@
-﻿using System.Security.Cryptography;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using Npgsql;
+using System.Data;
+using EasyNetQ;
 
 namespace bankbackend.Controllers
 {
@@ -10,21 +12,93 @@ namespace bankbackend.Controllers
     [ApiController]
     public class CustomerController : Controller
     {
-
-        // GET: api/Customer
-        [HttpGet]
-        public String Get()
+        private readonly IConfiguration _configuration;
+        public CustomerController(IConfiguration configuration)
         {
-            return "Hello";
+            _configuration = configuration;
         }
 
 
-        [Route("Get/{id}")]
+
+
+        // GET: api/Values
+        [HttpGet]
+        public string Get()
+        {
+            string query = @"
+                select id as ""id"",
+                name as ""name"",
+                surename as ""surename"",
+                email as ""email"",
+                telefon as ""telefon"",
+                username as ""username""
+                From customer";
+
+
+
+
+            string ausgabe = string.Empty; ;
+            string sqlDatasource = _configuration.GetConnectionString("bankappcon");
+            NpgsqlDataReader myReader;
+            using (var mycon = new NpgsqlConnection(sqlDatasource))
+            {
+                mycon.Open();
+                using (NpgsqlCommand mycommand = new NpgsqlCommand(query, mycon))
+                {
+                    myReader = mycommand.ExecuteReader();
+                    DataTable table = new DataTable();
+                    table.Load(myReader);
+                    ausgabe = JsonConvert.SerializeObject(table);
+                    myReader.Close();
+                    mycon.Close();
+                }
+            }
+            return ausgabe;
+        }
+    
+
+
+    [Route("Get/{id}")]
         [HttpGet]
         // GET: api/Customer/Get/{id}
-        public String Get(int id)
+        public string Get(int id)
         {
-            return "Hello"+id;
+            string query = @"
+                select id as ""id"",
+                name as ""name"",
+                surename as ""surename"",
+                email as ""email"",
+                telefon as ""telefon"",
+                username as ""username""
+                From customer";
+
+
+
+
+            string ausgabe = string.Empty; ;
+            string sqlDatasource = _configuration.GetConnectionString("bankappcon");
+            NpgsqlDataReader myReader;
+            using (var mycon = new NpgsqlConnection(sqlDatasource))
+            {
+                mycon.Open();
+                using (NpgsqlCommand mycommand = new NpgsqlCommand(query, mycon))
+                {
+                    myReader = mycommand.ExecuteReader();
+                    DataTable table = new DataTable();
+                    table.Load(myReader);
+                    
+                    ausgabe = JsonConvert.SerializeObject(table);
+                    string[] ausgabeauswerten=ausgabe.Split(",");
+
+                    foreach (var test in ausgabeauswerten)
+                    {
+                        Console.WriteLine(test);
+                    }
+                    myReader.Close();
+                    mycon.Close();
+                }
+            }
+            return ausgabe;
         }
 
 

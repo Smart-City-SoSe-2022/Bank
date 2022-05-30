@@ -1,16 +1,28 @@
+using bankbackend.BackgroundServices;
 using bankbackend.Models;
 using Npgsql;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using EasyNetQ;
+
 
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
+
+string rabbitmqcon = "host=host.docker.internal;username=guest;password=guest;timeout=60";
+var bus = RabbitHutch.CreateBus(rabbitmqcon);
+builder.Services.AddSingleton(bus);
+builder.Services.AddHostedService<UserEventHandler>();
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+
+
 
 
 var app = builder.Build();
