@@ -13,7 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
 
-string rabbitmqcon = "host=host.docker.internal;username=guest;password=guest;timeout=60";
+string rabbitmqcon = "host=localhost;username=guest;password=guest;timeout=60";
 var bus = RabbitHutch.CreateBus(rabbitmqcon);
 builder.Services.AddSingleton(bus);
 builder.Services.AddHostedService<UserEventHandler>();
