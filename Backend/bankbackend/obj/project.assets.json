@@ -1102,11 +1102,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Marcel\\Desktop\\Uni\\Softwareproektmanagment\\Bank\\Backend\\BankBackend\\bankbackend.csproj",
+      "projectUniqueName": "C:\\Users\\Marcel\\OneDrive\\Desktop\\uni\\Bank\\Backend\\bankbackend\\bankbackend.csproj",
       "projectName": "bankbackend",
-      "projectPath": "C:\\Users\\Marcel\\Desktop\\Uni\\Softwareproektmanagment\\Bank\\Backend\\BankBackend\\bankbackend.csproj",
+      "projectPath": "C:\\Users\\Marcel\\OneDrive\\Desktop\\uni\\Bank\\Backend\\bankbackend\\bankbackend.csproj",
       "packagesPath": "C:\\Users\\Marcel\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Marcel\\Desktop\\Uni\\Softwareproektmanagment\\Bank\\Backend\\BankBackend\\obj\\",
+      "outputPath": "C:\\Users\\Marcel\\OneDrive\\Desktop\\uni\\Bank\\Backend\\bankbackend\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
