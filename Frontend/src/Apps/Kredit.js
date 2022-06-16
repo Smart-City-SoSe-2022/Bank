@@ -9,7 +9,7 @@ export default function Kredit() {
       <TextField id="outlined-basic" label="Betrag" variant="outlined" />
       </div> 
       <div>
-      <Button variant="contained" size="large" onClick={transfer}>Überweisen</Button>
+      <Button variant="contained" size="large" onClick={transfer}>Beantragen</Button>
       </div>
     </div>
   );

@@ -2,8 +2,6 @@
 using Newtonsoft.Json;
 using Npgsql;
 using System.Data;
-using EasyNetQ;
-
 namespace bankbackend.Controllers
 {
 
