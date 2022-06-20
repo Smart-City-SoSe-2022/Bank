@@ -19,22 +19,11 @@ namespace bankbackend.Controllers
 
 
 
-        // GET: api/Values
+        // GET: api/Customer
         [HttpGet]
         public string Get()
         {
-            string query = @"
-                select id as ""id"",
-                name as ""name"",
-                surename as ""surename"",
-                email as ""email"",
-                telefon as ""telefon"",
-                username as ""username""
-                From customer";
-
-
-
-
+            string query = "SELECT * FROM customer";
             string ausgabe = string.Empty; ;
             string sqlDatasource = _configuration.GetConnectionString("bankappcon");
             NpgsqlDataReader myReader;
@@ -59,22 +48,17 @@ namespace bankbackend.Controllers
     [Route("Get/{id}")]
         [HttpGet]
         // GET: api/Customer/Get/{id}
-        public string Get(int id)
+        public string Get(int Id)
         {
-            string query = @"
-                select id as ""id"",
-                name as ""name"",
-                surename as ""surename"",
-                email as ""email"",
-                telefon as ""telefon"",
-                username as ""username""
-                From customer";
+            string query = "SELECT * FROM customer WHERE id ="+Id;
+            
 
 
 
 
             string ausgabe = string.Empty; ;
             string sqlDatasource = _configuration.GetConnectionString("bankappcon");
+            string[] ausgabeauswerten;
             NpgsqlDataReader myReader;
             using (var mycon = new NpgsqlConnection(sqlDatasource))
             {
@@ -84,14 +68,13 @@ namespace bankbackend.Controllers
                     myReader = mycommand.ExecuteReader();
                     DataTable table = new DataTable();
                     table.Load(myReader);
-                    
-                    ausgabe = JsonConvert.SerializeObject(table);
-                    string[] ausgabeauswerten=ausgabe.Split(",");
 
-                    foreach (var test in ausgabeauswerten)
-                    {
-                        Console.WriteLine(test);
-                    }
+
+
+                    ausgabe = JsonConvert.SerializeObject(table);
+                    
+
+                   
                     myReader.Close();
                     mycon.Close();
                 }
