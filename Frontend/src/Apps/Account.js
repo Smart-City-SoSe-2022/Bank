@@ -1,30 +1,113 @@
 import * as React from "react";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
+import { DataGrid } from '@mui/x-data-grid';
+import {balance as urlbalance,urlbegin,debit as urldebit} from './Apicalls.js'
+import { useState, useEffect } from "react";
+
+const columns = [
+  { field: 'bankbalance', headerName: 'Betrag', width: 130 },
+  { field: 'date', headerName: 'Datum', width: 130 },
+  {
+    field: 'reason',
+    headerName: 'Grund',
+    sortable: false,
+    width: 90,
+  },
+  {
+    field: 'fromuser',
+    headerName: 'Gesendet von',
+    description: 'This column has a value getter and is not sortable.',
+    sortable: false,
+    width: 160,
+  },
+];
+
+let rows = [
+  
+  {id: 0,debitid:0,date:"23.06.2022",bankbalance:-300.00,reason:"cool",customerid:0,fromuser:"null"}
+ 
+];
 
 
 
 export default function CheckboxList() {
-  var kontostand=200
-  return (
-<div>
-    <h1> Kontostand </h1>
-    <h2> Ihr Kontostand beträgt : {kontostand} €</h2>
-    <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
-      {[0, 1, 2, 3].map((value) => {
-        const labelId = `checkbox-list-label-${value}`;
-        return (
-          <div>
-            <ListItem key={value} disablePadding>
-              <ListItemText id={labelId} primary={`Betrag  ${value + 1}`} />
-              <ListItemText id={labelId} primary={`Username  ${value + 1}`}/>
-              <ListItemText id={labelId} primary={`Kontonr  ${value + 1}`}/>
-              <ListItemText id={labelId} primary={`Datum ${value + 1}`} />
-            </ListItem>
-          </div>
+
+  const [balance, setBalance] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+ useEffect(() => {
+  const getData1 = async () => {
+    try {
+      const response = await fetch(
+        urlbegin+urlbalance+"0"
+      );
+      if (!response.ok) {
+        throw new Error(
+          `This is an HTTP error: The status is ${response.status}`
         );
-      })}
-    </List></div>
+      }
+      let actualDatabalance = await response.json();
+
+      const response2 = await fetch(
+        urlbegin+urldebit+"0"
+      );
+      if (!response2.ok) {
+        throw new Error(
+          `This is an HTTP error: The status is ${response2.status}`
+        );
+      }
+      let actualData = await response2.json();
+      setBalance(actualDatabalance);
+      rows=actualData;
+      generaterow()
+      setError(null);
+    } catch(err) {
+      setError(err.message);
+      setBalance(null);
+    } finally {
+      setLoading(false);
+    }  
+  }
+  getData1()
+  
+  
+}, [])
+ 
+   
+  return (
+    
+    <div className="App" align='center'>
+    {loading && <div>A moment please...</div>}
+    {error && (
+      <div>{`There is a problem fetching the post data - ${error}`}</div>
+    )}
+    {balance &&
+        balance.map(({ sum }) => (
+          <div>
+          <h1> Kontostand </h1>
+           <h2> Ihr Kontostand beträgt : {sum} €</h2>
+            <div style={{ height: 400, width: '100%' }}>
+      <DataGrid
+        rows={rows}
+        columns={columns}
+        pageSize={5}
+        rowsPerPageOptions={[5]}
+      />
+      </div>
+    </div>
+          
+        ))}
+    </div>
   );
 }
+
+function generaterow(){
+for(let i=0;i<rows.length;i++){
+  rows[i].id=i;
+  rows[i].bankbalance+="€";
+}
+
+rows.reverse();
+
+}
+

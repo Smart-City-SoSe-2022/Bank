@@ -5,8 +5,10 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Acount from "./Account";
-import Kredit from "./Kredit";
 import Transfer from "./Transfer";
+
+
+
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -44,10 +46,10 @@ function a11yProps(index) {
 export default function Auswahl() {
   const [value, setValue] = React.useState(0);
 
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
   return (
     <Box sx={{ width: "100%" }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -58,7 +60,7 @@ export default function Auswahl() {
         >
           <Tab label="Kontostand" {...a11yProps(0)} />
           <Tab label="Überweisung" {...a11yProps(1)} />
-          <Tab label="Kredit" {...a11yProps(2)} />
+          
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
@@ -67,9 +69,7 @@ export default function Auswahl() {
       <TabPanel value={value} index={1}>
         <Transfer/>
       </TabPanel>
-      <TabPanel value={value} index={2}>
-        <Kredit />
-      </TabPanel>
+     
     </Box>
   );
 }
