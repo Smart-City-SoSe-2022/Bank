@@ -1,34 +1,28 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Npgsql;
 using System.Data;
 namespace bankbackend.Controllers
 {
-   
+        [Authorize]
         [Route("api/[controller]")]
         [ApiController]
        public class DebitController : Controller
     {
-
+        private readonly IJWTAuthentication jWTAuthentication;
         private readonly IConfiguration _configuration;
-        public DebitController(IConfiguration configuration)
+        public DebitController(IConfiguration configuration, IJWTAuthentication jWTAuthenticatio)
         {
             _configuration = configuration;
+            this.jWTAuthentication = jWTAuthentication;            
         }
-
-
-        // GET: api/Debit
-        [HttpGet]
-            public String Get()
-            {
-                return "Hello";
-            }
-
-
+        
+        
         [Route("Get/{id}")]
         [HttpGet]
         // GET: api/Debit/Get/0
-        public String Get(int id)
+        public String Getdebit(int id)
         {
             string query = "SELECT * FROM debit where customerid = " + id;
             string ausgabe = string.Empty; ;
@@ -49,7 +43,7 @@ namespace bankbackend.Controllers
             }
             return ausgabe;
         }
-
+        
         [Route("Balance/Get/{id}")]
         [HttpGet]
         // GET: api/Debit/Balance/Get/0
@@ -76,7 +70,7 @@ namespace bankbackend.Controllers
         }
 
 
-
+        
         [Route("creat/{id}/{balance}/{reason}")]
             [HttpGet]
         // GET: api/Debit/creat/{id}/{Balance}/{reason}
@@ -94,7 +88,17 @@ namespace bankbackend.Controllers
             return "Überweisung Wurde getätigt";
             }
 
-
+        [AllowAnonymous]
+        [HttpPost("authenticate")]
+        public IActionResult Post([FromBody] string value)
+        {
+            var token =jWTAuthentication.Authenticate("cool");
+            if (token == null)
+            {
+                return Unauthorized();
+            }
+            return Ok(value);
+        }
 
         }
     
