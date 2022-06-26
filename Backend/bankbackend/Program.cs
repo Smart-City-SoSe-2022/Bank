@@ -8,6 +8,13 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
+builder.Services.AddCors(o => o.AddPolicy("MyAllowSpecificOrigins", builder =>
+{
+    builder.AllowAnyOrigin()
+           .AllowAnyMethod()
+           .AllowAnyHeader();
+}));
+
 builder.Services.AddControllers();
 
 var key = "thisisthesecretkey";
@@ -46,6 +53,7 @@ builder.Services.AddSwaggerGen();
 
 
 
+
 var app = builder.Build();
 
 
@@ -55,8 +63,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-app.UseCors(options => options.AllowAnyOrigin());
+
+app.UseCors("MyAllowSpecificOrigins");
 app.UseHttpsRedirection();
+
 
 
 app.UseAuthentication();

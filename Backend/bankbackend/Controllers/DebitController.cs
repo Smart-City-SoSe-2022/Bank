@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Npgsql;
 using System.Data;
+using System.Text.Json;
+
 namespace bankbackend.Controllers
 {
         
@@ -76,19 +79,17 @@ namespace bankbackend.Controllers
             }
         }
 
-        
-        // POST api/<ValuesController>
+
         [Route("creat")]
         [HttpPost]
         // GET: api/Debit/creat
-        public string creatdebi([FromBody] string value)
+        public string creatdebiIndex([FromBody] JsonElement body)
         {
             try
             {
-                string[] values = value.Split(',');
-                float balance = float.Parse(values[1]);
-                int id = int.Parse(values[0]);
-                string reason = values[2];
+                float balance = float.Parse(body.GetProperty("betrag").ToString());
+                int id = int.Parse(body.GetProperty("kontonr").ToString());
+                string reason = body.GetProperty("reason").ToString();
                 string query = "INSERT INTO public.debit(debitid, date, bankbalance, reason, customerid, fromuser) VALUES(Default,'" + DateTime.Now + "'," + balance + ", '" + reason + "', " + id + ", " + id + ");";
                 string sqlDatasource = _configuration.GetConnectionString("bankappcon");
                 using var con = new NpgsqlConnection(sqlDatasource);

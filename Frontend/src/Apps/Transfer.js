@@ -29,9 +29,9 @@ export default function Transfer() {
 
 const transfer = async () => {
 
- let kontonr = document.getElementById("kontonr").value;
-    let betrag = document.getElementById("betrag").value;
-    let reason = document.getElementById("reason").value;
+ let kontonr1 = document.getElementById("kontonr").value;
+    let betrag1 = document.getElementById("betrag").value;
+    let reason1 = document.getElementById("reason").value;
 
   try {
     const response = await fetch(
@@ -45,22 +45,18 @@ const transfer = async () => {
   
     let actualDatabalance = await response.json();
     balancecheck=actualDatabalance[0];
-    let check= balancecheck.sum - betrag;
+    let check= balancecheck.sum - betrag1;
     
     console.log(balancecheck.sum);
     console.log(check);
-    console.log(parseInt(betrag));
-    if(balancecheck.sum+parseInt(betrag)>(-700)){
+    console.log(parseInt(betrag1));
+    if(balancecheck.sum+parseInt(betrag1)>(-700)){
       try {
-        const requestOptions = {
+        await fetch(urlbegin+urltrans,{
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ kontonr: kontonr, betrag: betrag, reason: reason })
-      };
-       await fetch(urlbegin+urltrans, requestOptions)
-          .then(response => response.json())
-          .then(data => this.setState({ postId: data.id }));
-
+          headers: {'Accept': 'application/json','Content-Type':'application/json'},
+            body:  JSON.stringify({ kontonr: ""+kontonr1, betrag: ""+betrag1, reason: ""+reason1 })
+        });
 
       alert("Überweisung erfolgreich")
     } catch(err) {
