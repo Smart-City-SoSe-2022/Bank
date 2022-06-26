@@ -52,15 +52,16 @@ const transfer = async () => {
     console.log(parseInt(betrag));
     if(balancecheck.sum+parseInt(betrag)>(-700)){
       try {
-      const response = await fetch(
-        urlbegin+urltrans+kontonr+"/"+betrag+"/"+reason
-      );
-      if (!response.ok) {
-        throw new Error(
-          `This is an HTTP error: The status is ${response.status}`
-        );
-      }
-      
+        const requestOptions = {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ kontonr: kontonr, betrag: betrag, reason: reason })
+      };
+       await fetch(urlbegin+urltrans, requestOptions)
+          .then(response => response.json())
+          .then(data => this.setState({ postId: data.id }));
+
+
       alert("Überweisung erfolgreich")
     } catch(err) {
       alert("Überweisung fehlgeschlagen")

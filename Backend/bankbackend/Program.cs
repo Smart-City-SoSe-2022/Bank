@@ -33,6 +33,7 @@ builder.Services.AddSingleton <IJWTAuthentication>(new JWTAutenthication(key));
 
 
 
+
 string rabbitmqcon = "host=localhost;username=guest;password=guest;timeout=60";
 var bus = RabbitHutch.CreateBus(rabbitmqcon);
 builder.Services.AddSingleton(bus);
