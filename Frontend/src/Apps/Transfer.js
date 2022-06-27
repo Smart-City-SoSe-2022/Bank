@@ -23,6 +23,9 @@ export default function Transfer() {
       <div>
       <Button variant="contained" size="large" onClick={transfer} >Überweisen</Button>
       </div>
+      <div>
+      <Button variant="contained" size="large" onClick={transferin} >Einzahlung</Button>
+      </div>
     </div>
   );
 }
@@ -69,3 +72,46 @@ const transfer = async () => {
     
   } 
 }
+
+const transferin = async () => {
+
+  let kontonr1 = document.getElementById("kontonr").value;
+     let betrag1 = document.getElementById("betrag").value;
+     let reason1 = document.getElementById("reason").value;
+ 
+   try {
+     const response = await fetch(
+       urlbegin+urlbalance
+     );
+     if (!response.ok) {
+       throw new Error(
+         `This is an HTTP error: The status is ${response.status}`
+       );
+     }
+   
+     let actualDatabalance = await response.json();
+     balancecheck=actualDatabalance[0];
+     
+     if(balancecheck.sum+parseInt(betrag1)>(-700)){
+       try {
+         await fetch(urlbegin+urltrans,{
+           method: 'POST',
+           headers: {'Accept': 'application/json','Content-Type':'application/json'},
+             body:  JSON.stringify({ kontonr: ""+kontonr1, betrag: ""+betrag1, reason: ""+reason1 })
+         });
+ 
+       alert("Überweisung erfolgreich")
+     } catch(err) {
+       alert("Überweisung fehlgeschlagen")
+     } 
+ 
+   }else{
+     alert("Nicht genug Guthaben")}
+     
+   
+     
+   } catch(err) {
+     alert("Überweisung fehlgeschlagen")
+     
+   } 
+ }
