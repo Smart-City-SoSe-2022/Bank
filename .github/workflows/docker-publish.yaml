@@ -67,7 +67,6 @@ jobs:
             ${{ steps.meta.outputs.tags }}
             ${{ env.REGISTRY }}/${{ env.FRONTEND_NAME }}:latest
             ${{ env.REGISTRY }}/${{ env.FRONTEND_NAME }}:${{ github.sha }}
-            ${{ env.REGISTRY }}/${{ env.FRONTEND_NAME }}:${{ github.sha }}:main
           labels: ${{ steps.meta.outputs.labels }}
 
         
@@ -118,7 +117,6 @@ jobs:
             ${{ steps.meta.outputs.tags }}
             ${{ env.REGISTRY }}/${{ env.BACKEND_NAME }}:latest
             ${{ env.REGISTRY }}/${{ env.BACKEND_NAME }}:${{ github.sha }}
-            ${{ env.REGISTRY }}/${{ env.FRONTEND_NAME }}:${{ github.sha }}:main
           labels: ${{ steps.meta.outputs.labels }}
           
   deploy_backend:
