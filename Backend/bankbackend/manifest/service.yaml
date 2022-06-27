@@ -20,7 +20,7 @@ metadata:
           f:internalTrafficPolicy: {}
           f:ports:
             .: {}
-            k:{"port":9001,"protocol":"TCP"}:
+            k:{"port":9005,"protocol":"TCP"}:
               .: {}
               f:name: {}
               f:port: {}
@@ -31,10 +31,10 @@ metadata:
           f:type: {}
 spec:
   ports:
-    - name: tcp-9005-5001-8hx9p
+    - name: tcp-9005-80-8hx9p
       protocol: TCP
       port: 9005
-      targetPort: 5001
+      targetPort: 80
   selector:
     k8s-app: bank-backend
   clusterIP: 10.109.232.133
