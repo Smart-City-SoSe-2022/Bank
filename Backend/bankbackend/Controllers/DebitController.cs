@@ -34,7 +34,7 @@ namespace bankbackend.Controllers
             string a = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxOTE2MjM5MDIyfQ.MTek18-U2FKiOJvH89WskFJ9W-Yj8dK4zPgfkA-di2Q";
             string b = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxOTk2MjM5MDIyfQ.Aqbekm4AhhNLhZC3eUwcZFOhFK_dX9l-ehYXZf3xcpI";
             JWTdecode jwtDecode = new JWTdecode();
-            int id = jwtDecode.GetID(a);
+            int id = jwtDecode.GetID(cookieValueFromReq);
 
             string query = "SELECT * FROM debit where customerid = " + id;
             string ausgabe = string.Empty; ;
@@ -66,7 +66,7 @@ namespace bankbackend.Controllers
             string a = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxOTE2MjM5MDIyfQ.MTek18-U2FKiOJvH89WskFJ9W-Yj8dK4zPgfkA-di2Q";
             string b = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxOTk2MjM5MDIyfQ.Aqbekm4AhhNLhZC3eUwcZFOhFK_dX9l-ehYXZf3xcpI";
             JWTdecode jwtDecode = new JWTdecode();
-            int id = jwtDecode.GetID(a);
+            int id = jwtDecode.GetID(cookieValueFromReq);
            
             try
             {
@@ -87,6 +87,7 @@ namespace bankbackend.Controllers
                         mycon.Close();
                     }
                 }
+                
                 return ausgabe;
             }
             catch (Exception ex)
@@ -107,7 +108,7 @@ namespace bankbackend.Controllers
             string a = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxOTE2MjM5MDIyfQ.MTek18-U2FKiOJvH89WskFJ9W-Yj8dK4zPgfkA-di2Q";
             string b = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxOTk2MjM5MDIyfQ.Aqbekm4AhhNLhZC3eUwcZFOhFK_dX9l-ehYXZf3xcpI";
             JWTdecode jwtDecode = new JWTdecode();
-            int idsend = jwtDecode.GetID(a);
+            int idsend = jwtDecode.GetID(cookieValueFromReq);
             try
             {
                 float balance = float.Parse(body.GetProperty("betrag").ToString());
@@ -141,7 +142,7 @@ namespace bankbackend.Controllers
             string a = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxOTE2MjM5MDIyfQ.MTek18-U2FKiOJvH89WskFJ9W-Yj8dK4zPgfkA-di2Q";
                 string b = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxOTk2MjM5MDIyfQ.Aqbekm4AhhNLhZC3eUwcZFOhFK_dX9l-ehYXZf3xcpI";
             JWTdecode jwtDecode = new JWTdecode();
-            int idsend = jwtDecode.GetID(a);
+            int idsend = jwtDecode.GetID(cookieValueFromReq);
             try
             {
                 float balance = float.Parse(body.GetProperty("betrag").ToString());
