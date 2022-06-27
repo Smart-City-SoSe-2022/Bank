@@ -32,7 +32,7 @@ namespace bankbackend.Controllers
             string cookieValueFromReq = Request.Cookies["JWT"];
             Console.WriteLine(cookieValueFromReq);
             string a = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxOTE2MjM5MDIyfQ.MTek18-U2FKiOJvH89WskFJ9W-Yj8dK4zPgfkA-di2Q";
-            string b = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxOTk2MjM5MDIyfQ.Aqbekm4AhhNLhZC3eUwcZFOhFK_dX9l-ehYXZf3xcpI"
+            string b = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxOTk2MjM5MDIyfQ.Aqbekm4AhhNLhZC3eUwcZFOhFK_dX9l-ehYXZf3xcpI";
             JWTdecode jwtDecode = new JWTdecode();
             int id = jwtDecode.GetID(a);
 
@@ -98,7 +98,7 @@ namespace bankbackend.Controllers
 
         [Route("creat/einzahlung")]
         [HttpPost]
-        // GET: api/Debit/creat
+        // GET: api/Debit/creat/einzahlung
         public string createinzahlung([FromBody] JsonElement body)
         {
 
@@ -128,7 +128,7 @@ namespace bankbackend.Controllers
             {
                 return "fehler";
             }
-
+        }
 
             [Route("creat")]
         [HttpPost]

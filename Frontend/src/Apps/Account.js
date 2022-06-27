@@ -34,13 +34,6 @@ const cookies = new Cookies();
 
 
 export default function Account() {
-  cookies.set('JWT', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxOTE2MjM5MDIyfQ.MTek18-U2FKiOJvH89WskFJ9W-Yj8dK4zPgfkA-di2Q', 
-  { path: '/', maxAge: 60 * 60 * 24 * 7 ,secure:true,sameSite:'none',httpOnly:true,domain:'localhost'});
-
-
-
-
-
   const [balance, setBalance] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
