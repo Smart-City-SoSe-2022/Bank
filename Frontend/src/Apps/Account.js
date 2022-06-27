@@ -60,6 +60,9 @@ export default function Account() {
         );
       }
       let actualData = await response2.json();
+      if(actualData){
+        
+      }
       setBalance(actualDatabalance);
       rows=actualData;
       generaterow()
