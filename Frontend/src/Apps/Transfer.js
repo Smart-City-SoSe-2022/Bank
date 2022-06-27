@@ -38,7 +38,7 @@ const transfer = async () => {
 
   try {
     const response = await fetch(
-      urlbegin+urlbalance
+      urlbegin+urlbalance,{mode: 'cors',credentials: 'include'}
     );
     if (!response.ok) {
       throw new Error(
@@ -52,6 +52,7 @@ const transfer = async () => {
     if(balancecheck.sum+parseInt(betrag1)>(-700)){
       try {
         await fetch(urlbegin+urltrans,{
+          mode: 'cors',credentials: 'include',
           method: 'POST',
           headers: {'Accept': 'application/json','Content-Type':'application/json'},
             body:  JSON.stringify({ kontonr: ""+kontonr1, betrag: ""+betrag1, reason: ""+reason1 })
@@ -81,7 +82,7 @@ const transferin = async () => {
  
    try {
      const response = await fetch(
-       urlbegin+urlbalance
+       urlbegin+urlbalance, {mode: 'cors',credentials: 'include'}
      );
      if (!response.ok) {
        throw new Error(
@@ -95,6 +96,7 @@ const transferin = async () => {
      if(balancecheck.sum+parseInt(betrag1)>(-700)){
        try {
          await fetch(urlbegin+urltransferin,{
+          mode: 'cors',credentials: 'include',
            method: 'POST',
            headers: {'Accept': 'application/json','Content-Type':'application/json'},
              body:  JSON.stringify({ kontonr: ""+kontonr1, betrag: ""+betrag1, reason: ""+reason1 })

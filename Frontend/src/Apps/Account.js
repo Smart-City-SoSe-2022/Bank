@@ -52,7 +52,7 @@ export default function Account() {
       let actualDatabalance = await response.json();
 
       const response2 = await fetch(
-        urlbegin+urldebit
+        urlbegin+urldebit,{mode: 'cors',credentials: 'include'}
       );
       if (!response2.ok) {
         throw new Error(
