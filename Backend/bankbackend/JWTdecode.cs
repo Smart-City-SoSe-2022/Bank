@@ -17,6 +17,7 @@ namespace bankbackend
 
             var jsonToken = handler.ReadToken(stream);
             string test = jsonToken.ToString();
+            Console.WriteLine(test);
             string[] decoded = test.Split('.');
             string[] idbefor=decoded[1].Split(',');
             string ids = idbefor[0];

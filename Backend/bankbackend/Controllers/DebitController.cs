@@ -10,7 +10,7 @@ using static bankbackend.JWTdecode;
 
 namespace bankbackend.Controllers
 {
-        
+        [EnableCors]    
         [Route("api/[controller]")]
         [ApiController]
        public class DebitController : Controller
