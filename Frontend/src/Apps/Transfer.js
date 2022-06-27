@@ -1,7 +1,7 @@
 import { TextField } from "@mui/material";
 import * as React from "react";
 import Button from '@mui/material/Button';
-import {urlbegin,transfer as urltrans,balance as urlbalance} from './Apicalls.js'
+import {urlbegin,transfer as urltrans,balance as urlbalance,transferin as urltransferin} from './Apicalls.js'
 
 let balancecheck=0;
 export default function Transfer() {
@@ -94,7 +94,7 @@ const transferin = async () => {
      
      if(balancecheck.sum+parseInt(betrag1)>(-700)){
        try {
-         await fetch(urlbegin+urltrans,{
+         await fetch(urlbegin+urltransferin,{
            method: 'POST',
            headers: {'Accept': 'application/json','Content-Type':'application/json'},
              body:  JSON.stringify({ kontonr: ""+kontonr1, betrag: ""+betrag1, reason: ""+reason1 })
