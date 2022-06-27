@@ -96,7 +96,7 @@ namespace bankbackend.Controllers
         }
 
 
-        [Route("creat")]
+        [Route("creat/einzahlung")]
         [HttpPost]
         // GET: api/Debit/creat
         public string createinzahlung([FromBody] JsonElement body)
@@ -114,7 +114,7 @@ namespace bankbackend.Controllers
                 float balancesend = balance * (-1);
                 int id = int.Parse(body.GetProperty("kontonr").ToString());
                 string reason = body.GetProperty("reason").ToString();
-                string query = "INSERT INTO public.debit(debitid, date, bankbalance, reason, customerid, fromuser) VALUES(Default,'" + DateTime.Now + "'," + balance + ", '" + reason + "', " + id + ", " + idsend + ");";
+                string query = "INSERT INTO public.debit(debitid, date, bankbalance, reason, customerid, fromuser) VALUES(Default,'" + DateTime.Now + "'," + balance + ", 'Einzahlung', " + id + ", " + 99999 + ");";
                 string sqlDatasource = _configuration.GetConnectionString("bankappcon");
                 using var con = new NpgsqlConnection(sqlDatasource);
                 con.Open();
