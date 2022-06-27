@@ -30,7 +30,7 @@ builder.Services.AddControllers();
 
 try
 {
-    string rabbitmqcon = "host=localhost;username=guest;password=guest;timeout=60";
+    string rabbitmqcon = "host=10.104.41.215;username=bank;password=Cp4iupK5detH5E7;timeout=60";
     var bus = RabbitHutch.CreateBus(rabbitmqcon);
     builder.Services.AddSingleton(bus);
     builder.Services.AddHostedService<UserEventHandler>();
