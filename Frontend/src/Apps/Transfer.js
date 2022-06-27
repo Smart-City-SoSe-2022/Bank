@@ -35,7 +35,7 @@ const transfer = async () => {
 
   try {
     const response = await fetch(
-      urlbegin+urlbalance+"0"
+      urlbegin+urlbalance
     );
     if (!response.ok) {
       throw new Error(
@@ -45,11 +45,7 @@ const transfer = async () => {
   
     let actualDatabalance = await response.json();
     balancecheck=actualDatabalance[0];
-    let check= balancecheck.sum - betrag1;
     
-    console.log(balancecheck.sum);
-    console.log(check);
-    console.log(parseInt(betrag1));
     if(balancecheck.sum+parseInt(betrag1)>(-700)){
       try {
         await fetch(urlbegin+urltrans,{

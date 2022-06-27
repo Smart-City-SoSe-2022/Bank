@@ -2,6 +2,7 @@ import * as React from "react";
 import { DataGrid } from '@mui/x-data-grid';
 import {balance as urlbalance,urlbegin,debit as urldebit} from './Apicalls.js'
 import { useState, useEffect } from "react";
+import Cookies from 'universal-cookie';
 
 const columns = [
   { field: 'bankbalance', headerName: 'Betrag', width: 130 },
@@ -29,8 +30,16 @@ let rows = [
 
 
 
-export default function CheckboxList() {
-  
+const cookies = new Cookies();
+
+
+export default function Account() {
+  cookies.set('JWT', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxOTE2MjM5MDIyfQ.MTek18-U2FKiOJvH89WskFJ9W-Yj8dK4zPgfkA-di2Q', 
+  { path: '/', maxAge: 60 * 60 * 24 * 7 ,secure:true,sameSite:'none',httpOnly:true,domain:'localhost'});
+
+
+
+
 
   const [balance, setBalance] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -40,7 +49,7 @@ export default function CheckboxList() {
   const getData1 = async () => {
     try {
       const response = await fetch(
-        urlbegin+urlbalance+"0"
+        urlbegin+urlbalance,{mode: 'cors',credentials: 'include'}
       );
       if (!response.ok) {
         throw new Error(
@@ -50,7 +59,7 @@ export default function CheckboxList() {
       let actualDatabalance = await response.json();
 
       const response2 = await fetch(
-        urlbegin+urldebit+"0"
+        urlbegin+urldebit
       );
       if (!response2.ok) {
         throw new Error(

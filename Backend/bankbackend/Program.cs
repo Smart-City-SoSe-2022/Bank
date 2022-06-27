@@ -1,6 +1,7 @@
 using bankbackend;
 using bankbackend.BackgroundServices;
 using EasyNetQ;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -8,54 +9,37 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
+
+
+
+
 builder.Services.AddCors(o => o.AddPolicy("MyAllowSpecificOrigins", builder =>
 {
-    builder.AllowAnyOrigin()
-           .AllowAnyMethod()
-           .AllowAnyHeader();
+    builder.AllowAnyMethod()
+                .AllowAnyHeader()
+                .SetIsOriginAllowed(origin => true) 
+                .AllowCredentials();
 }));
 
 builder.Services.AddControllers();
 
-var key = "thisisthesecretkey";
-builder.Services.AddAuthentication(x => 
+
+
+
+
+
+try
 {
-    
-    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer(x => 
-{
-    x.RequireHttpsMetadata = false;
-    x.SaveToken = true;
-    x.TokenValidationParameters = new TokenValidationParameters
-    {
-        ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(key)),
-        ValidateIssuer = false,
-        ValidateAudience = false
-    };
-});
-
-builder.Services.AddSingleton <IJWTAuthentication>(new JWTAutenthication(key));
-
-
-
-
-string rabbitmqcon = "host=localhost;username=guest;password=guest;timeout=60";
-var bus = RabbitHutch.CreateBus(rabbitmqcon);
-builder.Services.AddSingleton(bus);
-builder.Services.AddHostedService<UserEventHandler>();
-
+    string rabbitmqcon = "host=localhost;username=guest;password=guest;timeout=60";
+    var bus = RabbitHutch.CreateBus(rabbitmqcon);
+    builder.Services.AddSingleton(bus);
+    builder.Services.AddHostedService<UserEventHandler>();
+}
+catch { }   // Ignore if RabbitMQ is not running
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
-
-
-
-
 var app = builder.Build();
-
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

@@ -5,6 +5,8 @@ using Newtonsoft.Json;
 using Npgsql;
 using System.Data;
 using System.Text.Json;
+using static bankbackend.JWTdecode;
+
 
 namespace bankbackend.Controllers
 {
@@ -13,20 +15,27 @@ namespace bankbackend.Controllers
         [ApiController]
        public class DebitController : Controller
     {
-        private readonly IJWTAuthentication jWTAuthentication;
+        
         private readonly IConfiguration _configuration;
-        public DebitController(IConfiguration configuration, IJWTAuthentication jWTAuthenticatio)
+        public DebitController(IConfiguration configuration)
         {
             _configuration = configuration;
-            this.jWTAuthentication = jWTAuthentication;            
+               
         }
         
         
-        [Route("Get/{id}")]
+        [Route("Get")]
         [HttpGet]
-        // GET: api/Debit/Get/0
-        public String Getdebit(int id)
+        // GET: api/Debit/Get
+        public String Getdebit()
         {
+            string cookieValueFromReq = Request.Cookies["JWT"];
+            Console.WriteLine(cookieValueFromReq);
+            string a = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxOTE2MjM5MDIyfQ.MTek18-U2FKiOJvH89WskFJ9W-Yj8dK4zPgfkA-di2Q";
+            string b = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxOTk2MjM5MDIyfQ.Aqbekm4AhhNLhZC3eUwcZFOhFK_dX9l-ehYXZf3xcpI"
+            JWTdecode jwtDecode = new JWTdecode();
+            int id = jwtDecode.GetID(a);
+
             string query = "SELECT * FROM debit where customerid = " + id;
             string ausgabe = string.Empty; ;
             string sqlDatasource = _configuration.GetConnectionString("bankappcon");
@@ -47,11 +56,18 @@ namespace bankbackend.Controllers
             return ausgabe;
         }
         
-        [Route("Balance/Get/{id}")]
+        [Route("Balance/Get")]
         [HttpGet]
-        // GET: api/Debit/Balance/Get/0
-        public String Getbalance(int id)
+        // GET: api/Debit/Balance/Get
+        public String Getbalance()
         {
+            string cookieValueFromReq = Request.Cookies["JWT"];
+            Console.WriteLine(cookieValueFromReq);
+            string a = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxOTE2MjM5MDIyfQ.MTek18-U2FKiOJvH89WskFJ9W-Yj8dK4zPgfkA-di2Q";
+            string b = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxOTk2MjM5MDIyfQ.Aqbekm4AhhNLhZC3eUwcZFOhFK_dX9l-ehYXZf3xcpI"
+            JWTdecode jwtDecode = new JWTdecode();
+            int id = jwtDecode.GetID(a);
+           
             try
             {
                 string query = "SELECT SUM(bankbalance) FROM debit where customerid = " + id;
@@ -85,12 +101,20 @@ namespace bankbackend.Controllers
         // GET: api/Debit/creat
         public string creatdebiIndex([FromBody] JsonElement body)
         {
+
+            string cookieValueFromReq = Request.Cookies["JWT"];
+            Console.WriteLine(cookieValueFromReq);
+            string a = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxOTE2MjM5MDIyfQ.MTek18-U2FKiOJvH89WskFJ9W-Yj8dK4zPgfkA-di2Q";
+            string b = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxOTk2MjM5MDIyfQ.Aqbekm4AhhNLhZC3eUwcZFOhFK_dX9l-ehYXZf3xcpI"
+            JWTdecode jwtDecode = new JWTdecode();
+            int idsend = jwtDecode.GetID(a);
             try
             {
                 float balance = float.Parse(body.GetProperty("betrag").ToString());
+                float balancesend = balance * (-1);
                 int id = int.Parse(body.GetProperty("kontonr").ToString());
                 string reason = body.GetProperty("reason").ToString();
-                string query = "INSERT INTO public.debit(debitid, date, bankbalance, reason, customerid, fromuser) VALUES(Default,'" + DateTime.Now + "'," + balance + ", '" + reason + "', " + id + ", " + id + ");";
+                string query = "INSERT INTO public.debit(debitid, date, bankbalance, reason, customerid, fromuser) VALUES(Default,'" + DateTime.Now + "'," + balance + ", '" + reason + "', " + id + ", " + idsend + ");INSERT INTO public.debit(debitid, date, bankbalance, reason, customerid, fromuser) VALUES(Default,'" + DateTime.Now + "'," + balancesend + ", '" + reason + "', " + idsend + ", " + id + ");";
                 string sqlDatasource = _configuration.GetConnectionString("bankappcon");
                 using var con = new NpgsqlConnection(sqlDatasource);
                 con.Open();
@@ -107,40 +131,6 @@ namespace bankbackend.Controllers
 
         }
 
-        [Route("creat/{id}/{balance}/{reason}")]
-        [HttpGet]
-        // GET: api/Debit/creat/{id}/{Balance}/{reason}
-        public String Post(int id, float balance, string reason)
-        {
-            try
-            {
-                string query = "INSERT INTO public.debit(debitid, date, bankbalance, reason, customerid, fromuser) VALUES(Default,'" + DateTime.Now + "'," + balance + ", '" + reason + "', " + id + ", " + id + ");";
-                string sqlDatasource = _configuration.GetConnectionString("bankappcon");
-                using var con = new NpgsqlConnection(sqlDatasource);
-                con.Open();
-                using var cmd = new NpgsqlCommand();
-                cmd.Connection = con;
-                cmd.CommandText = query;
-                cmd.ExecuteNonQuery();
-
-                return "Überweisung Wurde getätigt";
-            }
-            catch (Exception ex)
-            {
-                return "Überweisung fehlgeschlagen";
-            }
-        }
-        
-        [HttpPost("authenticate")]
-        public IActionResult Post([FromBody] string value)
-        {
-            var token =jWTAuthentication.Authenticate("cool");
-            if (token == null)
-            {
-                return Unauthorized();
-            }
-            return Ok(value);
-        }
 
         }
     

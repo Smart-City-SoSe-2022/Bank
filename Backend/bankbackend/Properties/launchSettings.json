@@ -12,7 +12,7 @@
     "bankbackend": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "api/Debit/Balance/Get/0",
+      "launchUrl": "api/Debit/Balance/",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
@@ -22,7 +22,7 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "api/Debit/Balance/Get/0",
+      "launchUrl": "api/Debit/Balance/",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
@@ -30,7 +30,7 @@
     "Docker": {
       "commandName": "Docker",
       "launchBrowser": true,
-      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/api/Debit/Balance/Get/0",
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/api/Debit/Balance/",
       "publishAllPorts": true,
       "useSSL": true
     }

@@ -43,3 +43,9 @@ C:\Users\Marcel\OneDrive\Desktop\uni\Bank\Backend\bankbackend\obj\Release\net6.0
 C:\Users\Marcel\OneDrive\Desktop\uni\Bank\Backend\bankbackend\obj\Release\net6.0\bankbackend.pdb
 C:\Users\Marcel\OneDrive\Desktop\uni\Bank\Backend\bankbackend\obj\Release\net6.0\bankbackend.genruntimeconfig.cache
 C:\Users\Marcel\OneDrive\Desktop\uni\Bank\Backend\bankbackend\obj\Release\net6.0\ref\bankbackend.dll
+C:\Users\Marcel\OneDrive\Desktop\uni\Bank\Backend\bankbackend\bin\Release\net6.0\Altinn.Common.Authentication.dll
+C:\Users\Marcel\OneDrive\Desktop\uni\Bank\Backend\bankbackend\bin\Release\net6.0\Microsoft.Azure.KeyVault.dll
+C:\Users\Marcel\OneDrive\Desktop\uni\Bank\Backend\bankbackend\bin\Release\net6.0\Microsoft.Azure.KeyVault.WebKey.dll
+C:\Users\Marcel\OneDrive\Desktop\uni\Bank\Backend\bankbackend\bin\Release\net6.0\Microsoft.IdentityModel.Clients.ActiveDirectory.dll
+C:\Users\Marcel\OneDrive\Desktop\uni\Bank\Backend\bankbackend\bin\Release\net6.0\Microsoft.Rest.ClientRuntime.dll
+C:\Users\Marcel\OneDrive\Desktop\uni\Bank\Backend\bankbackend\bin\Release\net6.0\Microsoft.Rest.ClientRuntime.Azure.dll
