@@ -5,24 +5,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  annotations:
-    branch: refs/heads/main
-    commit: ccecc2b323abc203af4763134099e12fbe88779a
-    createdBy: lhumke
-    deployTimestamp: "1653758935680"
-    deployment.kubernetes.io/revision: "3"
-    jobName: deploy_backend
-    kubectl.kubernetes.io/last-applied-configuration: |
-      {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"creationTimestamp":"2022-05-09T09:53:14Z","labels":{"k8s-app":"portal-backend"},"managedFields":[{"apiVersion$
-    provider: GitHub
-    repository: Smart-City-SoSe-2022/Portal
-    run: "2401724205"
-    runUri: https://github.com/Smart-City-SoSe-2022/Portal/actions/runs/2401724205
-    workflow: Docker
   generation: 7
   labels:
-    k8s-app: portal-backend
-  name: portal-backend
+    k8s-app: bank-backend
+  name: bank-backend
   namespace: default
 spec:
   progressDeadlineSeconds: 600
@@ -30,7 +16,7 @@ spec:
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      k8s-app: portal-backend
+      k8s-app: bank-backend
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -39,25 +25,13 @@ spec:
   template:
     metadata:
       labels:
-        k8s-app: portal-backend
-      name: portal-backend
+        k8s-app: bank-backend
+      name: bank-backend
     spec:
-      volumes:
-        - name: env
-          configMap:
-            name: portal-config
-            items: 
-              - key: env
-                path: .env
       containers:
-      - image: ghcr.io/smart-city-sose-2022/portal-backend:58153f6f77130c5b77e3f36d6fdb722cac2fbad9
+      - image: ghcr.io/smart-city-sose-2022/bank-backend:main
         imagePullPolicy: Always
-        name: portal-backend
-        volumeMounts:
-          - name: env
-            readOnly: true
-            mountPath: /app/.env
-            subPath: .env
+        name: bank-backend
         resources: {}
         securityContext:
           privileged: false
@@ -81,7 +55,7 @@ status:
     type: Available
   - lastTransitionTime: "2022-05-09T09:53:14Z"
     lastUpdateTime: "2022-05-28T17:11:57Z"
-    message: ReplicaSet "portal-backend-6dd5999646" has successfully progressed.
+    message: ReplicaSet "bank-backend-6dd5999646" has successfully progressed.
     reason: NewReplicaSetAvailable
     status: "True"
     type: Progressing
