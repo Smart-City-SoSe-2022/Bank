@@ -23,7 +23,7 @@ namespace bankbackend
             string ids = idbefor[0];
 
           
-            string phrase = ids.Remove(0,6);
+            string phrase = ids.Remove(0,7);
 
             ids = phrase.Replace("\"", "");
             Console.WriteLine(ids);
